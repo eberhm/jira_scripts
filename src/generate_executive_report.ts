@@ -24,7 +24,7 @@ async function generateExecutiveReport(): Promise<void> {
     const JQLS = [
       // Hardcoded JQLs — update these JQL strings as needed
       'project in ("Developer Experience & Automation") and updatedDate >= -4w and status in (Done, Closed, Resolved, "In Development") ORDER BY component ASC, issuetype ASC',
-      'project in ("Developer Experience & Automation") and issuetype = Epic and updatedDate >= -4w and status in (Done, Closed, Resolved, "In Development") ORDER BY component ASC, issuetype ASC',
+      // 'project = "Cloud Move" and ("Team Name[Short text]" ~ "dea") and issuetype = Application and updatedDate >= -4w and status in (Done, Closed, Resolved, "In Development") ORDER BY component ASC, issuetype ASC',
     ];
 
     info("Fetching tickets for JQLs:", JQLS);
@@ -50,6 +50,7 @@ async function generateExecutiveReport(): Promise<void> {
 
     info(`Fetched ${issues.length} issues.`);
     debug("Building prompt from issues...");
+    debug(JSON.stringify({issues}));
     const prompt = buildReportPrompt(issues);
 
     info("Calling Gemini to generate executive report...");

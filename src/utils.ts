@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import axios from "axios";
 import { GoogleGenAI } from "@google/genai";
+import { prompt } from "./report_prompt";
+
 dotenv.config();
 
 const { JIRA_BASE_URL, JIRA_EMAIL, JIRA_API_TOKEN } = process.env;
@@ -76,7 +78,7 @@ export async function getTickets(
   const fields = opts?.fields ? opts.fields.join(",") : "summary";
 
   const encoded = encodeURIComponent(jql);
-  const url = `${baseUrl}/rest/api/3/search?jql=${encoded}&startAt=${startAt}&maxResults=${maxResults}&fields=${fields}`;
+  const url = `${baseUrl}/rest/api/3/search/jql?jql=${encoded}&startAt=${startAt}&maxResults=${maxResults}&fields=${fields}`;
 
   debug("getTickets URL", url);
   const res = await axios.get(url, {
@@ -112,6 +114,9 @@ export async function fetchAllTickets(jql: string): Promise<any[]> {
         "labels",
         "description",
         "resolution",
+        "components",
+        "customfield_10089",
+        "parent"
       ],
     });
 
@@ -143,14 +148,7 @@ function sanitizeText(text: any, maxLen = 1000): string {
  * Build a concise prompt for Gemini to produce an executive report.
  */
 export function buildReportPrompt(issues: any[]): string {
-  const header =
-    `You are an assistant that writes concise executive reports for engineering leadership. 
-Produce three sections in Markdown: '## Achievements', '## Continued efforts', and '## In Progress'. 
-Keep bullets short and outcome-focused. Synthesize related tickets into grouped bullets and 
-avoid overly technical details. The most important things are always clustered in epics and 
-Epics are the more insightfull things for the readers.
-
-Be concise and do not exceed 1000 words approx`;
+  const header = prompt;
 
   const ticketLines = issues
     .map((i: any) => {
