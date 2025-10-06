@@ -1,6 +1,6 @@
 # jira_scripts
 
-Minimal TypeScript scaffold with example scripts to manage a Jira Cloud account.
+Collection of TypeScript scripts to manage a Jira Cloud account and GitHub repositories.
 
 ## Purpose
 
@@ -52,6 +52,12 @@ REPORT_MAX_TOKENS=6000 npm run generate-executive-report
 
 - To change which JQLs are run, edit the `JQLS` array inside `src/generate_executive_report.ts`.
 
+- npm run github-search-replace
+  - Runs `src/github-search-replace.ts` using `ts-node`.
+  - Searches for a string across all repositories in specified GitHub organizations and creates pull requests with replacements.
+  - Requires GITHUB_TOKEN environment variable.
+  - See [GITHUB_SEARCH_REPLACE.md](GITHUB_SEARCH_REPLACE.md) for detailed documentation.
+
 ## Reports
 
 - Generated reports are written to the `reports/` directory as `executive_report-<timestamp>.md`.
@@ -62,8 +68,12 @@ REPORT_MAX_TOKENS=6000 npm run generate-executive-report
 - tsconfig.json — TypeScript config
 - src/list_issues.ts — example script to list issues
 - src/generate_executive_report.ts — generate executive report from multiple JQLs
+- src/github-search-replace.ts — GitHub search and replace script
+- src/github-client.ts — GitHub API wrapper
+- src/search-replace-config.ts — configuration interface for GitHub script
 - src/utils.ts — helper functions (Jira fetch, prompt builder, Gemini caller)
 - reports/ — generated reports (output)
+- GITHUB_SEARCH_REPLACE.md — detailed documentation for GitHub script
 
 ## Notes
 

@@ -5,7 +5,8 @@
     "main": "src/list_issues.ts",
     "scripts": {
         "list-issues": "ts-node src/list_issues.ts",
-        "generate-executive-report": "ts-node src/generate_executive_report.ts"
+        "generate-executive-report": "ts-node src/generate_executive_report.ts",
+        "github-search-replace": "ts-node src/github-search-replace.ts"
     },
     "keywords": [
         "jira",
@@ -16,6 +17,7 @@
     "license": "MIT",
     "dependencies": {
         "@google/genai": "^1.16.0",
+        "@octokit/rest": "^22.0.0",
         "axios": "^1.4.0",
         "dotenv": "^16.3.1"
     },
